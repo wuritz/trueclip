@@ -1,5 +1,5 @@
 {
-  "name": "stem-import-helper",
+  "name": "stem-preparator",
   "version": "1.0.0",
   "main": "dist/extension.js",
   "engines": {

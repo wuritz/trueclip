@@ -45,7 +45,6 @@ export function activate(activation: ActivationContext) {
             }
 
             for (const s of snapshots) {
-              const newDuration = s.duration + s.startMarker;
               let _startTime = 0;
 
               console.log(snapshots.indexOf(s));
@@ -54,7 +53,7 @@ export function activate(activation: ActivationContext) {
                 track.createAudioClip({
                   filePath: s.filePath,
                   startTime: _startTime, // move to 1.1.1.1
-                  duration: newDuration,
+                  duration: s.endMarker, // ends at audio end
                   isWarped: false, // disable warps
                   loopSettings: {
                     looping: false,
@@ -90,5 +89,5 @@ export function activate(activation: ActivationContext) {
   context.ui.registerContextMenuAction("AudioTrack", "Prepare All Stems", "stemPrep.run");
   context.ui.registerContextMenuAction("AudioClip", "Prepare All Stems", "stemPrep.run");
 
-  console.log("Asd");
+  console.log("Extension is ready!");
 }

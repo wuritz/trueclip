@@ -1,5 +1,5 @@
 {
-    "name": "Stem Import Helper",
+    "name": "Stem Preparator",
     "author": "Kierflex",
     "entry": "dist/extension.js",
     "version": "1.0.0",

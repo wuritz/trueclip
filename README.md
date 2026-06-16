@@ -1,4 +1,4 @@
-# Stem Import Helper
+# Stem Preparator
 
 An Ableton Live extension built with `@ableton-extensions/sdk`.
 
