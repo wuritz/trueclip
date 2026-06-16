@@ -20,8 +20,6 @@ A couple important things to note:
 * It *ONLY* works on **Audio Tracks**
 * It *DOES* retain the **original clip names, colours and mute states**
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
-
 ## Prerequisites
 
 If you want to compile the extension from the source:
