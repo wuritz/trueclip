@@ -1,6 +1,6 @@
 {
-    "name": "Stem Preparator",
-    "author": "Kierflex",
+    "name": "TrueClip",
+    "author": "wuritz",
     "entry": "dist/extension.js",
     "version": "1.0.0",
     "minimumApiVersion": "1.0.0"

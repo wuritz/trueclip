@@ -8,7 +8,7 @@ import {
 export function activate(activation: ActivationContext) {
   const context = initialize(activation, "1.0.0");
 
-  context.commands.registerCommand("stemPrep.run", (_arg: unknown) => {
+  context.commands.registerCommand("trueClip.run", (_arg: unknown) => {
       void (async () => {
         try {
           const song = context.application.song;
@@ -83,8 +83,8 @@ export function activate(activation: ActivationContext) {
   );
 
   // Register Context Menu
-  context.ui.registerContextMenuAction("AudioTrack", "Prepare All Stems", "stemPrep.run");
-  context.ui.registerContextMenuAction("AudioClip", "Prepare All Stems", "stemPrep.run");
+  context.ui.registerContextMenuAction("AudioTrack", "Prepare All Tracks", "trueClip.run");
+  context.ui.registerContextMenuAction("AudioClip", "Prepare All Tracks", "trueClip.run");
 
   console.log("Extension is ready!");
 }

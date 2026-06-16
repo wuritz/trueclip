@@ -1,5 +1,5 @@
 {
-  "name": "stem-preparator",
+  "name": "trueclip",
   "version": "1.0.0",
   "main": "dist/extension.js",
   "engines": {
