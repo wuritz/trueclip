@@ -40,3 +40,7 @@ You need **Ableton Live 12.4.5** (extensions should be supported) or higher to w
 
 ## Usage
 Right-click onto an `Audio Track` or an `Audio Clip`, and under `Extensions` select `TrueClip - Prepare All Tracks`.
+
+### License
+
+MIT © wuritz
