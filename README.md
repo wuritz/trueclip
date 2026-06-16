@@ -1,5 +1,9 @@
 # TrueClip for Ableton Live
 
+<a href="https://github.com/wuritz/genyo-addon/releases">
+    <img src="https://img.shields.io/github/downloads/wuritz/trueclip/total?style=flat">
+</a>
+
 An [Ableton Live](https://www.ableton.com) extension designed to clean up, reset and sequence imported audio stems. <br>
 
 When working with stems or tracking sessions, audio clips often end up trimmed, warped, or maybe scattered across the timeline. **TrueClip** automatically restores your clips to their true, unedited states and arranges them sequentially, making your timeline clean and ready for mixing or exporting.
