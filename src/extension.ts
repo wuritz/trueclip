@@ -30,7 +30,7 @@ export function activate(activation: ActivationContext) {
             const snapshots = clips
               .filter((c): c is AudioClip<"1.0.0"> => c instanceof AudioClip)
               .map(clip => ({
-                clip, // Keep reference so we can delete it later
+                clip,
                 filePath: clip.filePath,
                 duration: clip.duration,
                 startMarker: clip.startMarker,
@@ -44,40 +44,37 @@ export function activate(activation: ActivationContext) {
               await context.withinTransaction(() => track.deleteClip(s.clip));
             }
 
+            const newClips = [];
             for (const s of snapshots) {
               let _startTime = 0;
 
-              console.log(snapshots.indexOf(s));
+              if (newClips.length > 0) {
+                const lastClip = newClips[newClips.length - 1];
+                
+                _startTime = lastClip.duration; 
+              }
 
               const newClip = await context.withinTransaction(() =>
                 track.createAudioClip({
                   filePath: s.filePath,
-                  startTime: _startTime, // move to 1.1.1.1
-                  duration: s.endMarker, // ends at audio end
-                  isWarped: false, // disable warps
-                  loopSettings: {
-                    looping: false,
-                    startMarker: 0, // audio from the beginning
-                    endMarker: s.endMarker,
-                    loopStart: 0,
-                    loopEnd: s.endMarker
-                  }
+                  startTime: _startTime, 
+                  isWarped: false 
                 })
               );
 
-              // transfer the things from old to new clip
               await context.withinTransaction(() => {
                 newClip.name = s.name;
                 newClip.color = s.color;
                 newClip.muted = s.muted;
               });
+
+              newClips.push(newClip);
             }
 
             nOfTracks++;
           }
           
           console.log(nOfTracks + " tracks have been prepared!");
-
         } catch (error) {
           console.error("Stem preparation failed:", error);
         }
