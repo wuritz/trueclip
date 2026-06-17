@@ -15,10 +15,9 @@ I built TrueClip to automate my own personal workflow for prepping stems.
 
 <div align="center">
     <a href="https://github.com/wuritz/trueclip/releases">
-        <img src="https://img.shields.io/github/downloads/wuritz/trueclip/total?style=for-the-badge"
-        ">
+        <img src="https://img.shields.io/github/downloads/wuritz/trueclip/total?style=for-the-badge">
         <img src="https://img.shields.io/github/v/tag/wuritz/trueclip?label=Latest version&style=for-the-badge">
-</a>
+    </a>
 </div>
 
 ## Usage
