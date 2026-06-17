@@ -1,5 +1,4 @@
 import { ActivationContext, AudioClip, AudioTrack, initialize } from "@ableton-extensions/sdk";
-import { fileURLToPath } from "url";
 
 export function activate(activation: ActivationContext) {
     const context = initialize(activation, "1.0.0");
