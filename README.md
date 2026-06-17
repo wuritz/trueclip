@@ -1,45 +1,55 @@
-# TrueClip for Ableton Live
+<h1 align="center">TrueClip for Ableton Live</h1>
 
-<a href="https://github.com/wuritz/genyo-addon/releases">
-    <img src="https://img.shields.io/github/downloads/wuritz/trueclip/total?style=flat">
-</a>
+<div align="center">
+<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXRtbTVwdWhnZzBtb2wycmphZWhtN215YzZzbHprbHhlaXdoaDIwMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JEWFGVBPBsK7Bo062d/giphy.gif"/>
+</div>
 
 An [Ableton Live](https://www.ableton.com) extension designed to clean up, reset and sequence imported audio stems. <br>
 
-When working with stems or tracking sessions, audio clips often end up trimmed, warped, or maybe scattered across the timeline. **TrueClip** automatically restores your clips to their true, unedited states and arranges them sequentially, making your timeline clean and ready for mixing or exporting.
+When working with stems or tracking sessions, audio clips often end up trimmed, warped, or maybe scattered across the timeline for some reason.
+<br> **TrueClip** automatically restores your clips to their true, unedited states and arranges them sequentially, making your timeline clean and ready for mixing or exporting.
 
-I built TrueClip to automate my own personal workflow for prepping stems, turning a tedious routine into a convenient extension.
+I built TrueClip to automate my own personal workflow for prepping stems.
+
+<div align="center">
+<a href="https://github.com/wuritz/trueclip/releases">
+    <img src="https://img.shields.io/github/downloads/wuritz/trueclip/total?style=for-the-badge"
+    ">
+</a>
+<a href="https://github.com/wuritz/trueclip/releases">
+    <img src="https://img.shields.io/github/v/tag/wuritz/trueclip?label=Latest version&style=for-the-badge">
+</a>
+</div>
+
+## Usage
+Right-click onto an `Audio Track` or an `Audio Clip`, and under `Extensions` select `TrueClip - Prepare All Tracks`.
 
 ## Features
 
-TrueClip optimizes your audio clips by: 
+TrueClip optimizes your audio clips by:
 
 1. Turning off warps for all clips
 2. Putting the clip to the first point in the arrangement (1.1.1.1)
-3. Brings the start of the clip to the start of the audio
-4. Same with the end of the clip and the audio
-5. Turns off the track, so when you hit play, your ears won't get blasted off
+3. Extends the start and end of the clip to the audio's start and end points
+5. Turns off the track - so your ears won't get blasted off when you hit play
 
-A couple important things to note:
-* It *ONLY* works on **Audio Tracks**
+A couple of important important things to note:
+* It *ONLY* works on **Audio Clips of Audio Tracks**
 * It *DOES* retain the **original clip names, colours and mute states**
 
 ## Prerequisites
 
-If you want to compile the extension from the source:
-- Node.js ≥ 24.14.1
-- Ableton Extensions SDK (available to beta testers via Ableton's Centercode program — place the `.tgz` files in `vendor/`)
+If you want to compile the extension from source:
+- Node.js ≥ `24.14.1`
+- Ableton Extensions SDK (create a new folder called `vendor/` and place the `.tgz` SDK files there)
 
 ## Installation
 
 You need **Ableton Live 12.4.5** (extensions should be supported) or higher to work.
 
-1. Download the latest release (.ablx) from the [Releases](https://github.com/wuritz/trueclip/releases/latest) page
+1. Download the extension file (.ablx) from the [Releases](https://github.com/wuritz/trueclip/releases/latest) page
 2. Open Ableton's `Preferences\Extensions`
 3. Drag & Drop into there
-
-## Usage
-Right-click onto an `Audio Track` or an `Audio Clip`, and under `Extensions` select `TrueClip - Prepare All Tracks`.
 
 ### License
 
