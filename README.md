@@ -4,6 +4,8 @@
 <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXRtbTVwdWhnZzBtb2wycmphZWhtN215YzZzbHprbHhlaXdoaDIwMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JEWFGVBPBsK7Bo062d/giphy.gif"/>
 </div>
 
+<br>
+
 An [Ableton Live](https://www.ableton.com) extension designed to clean up, reset and sequence imported audio stems. <br>
 
 When working with stems or tracking sessions, audio clips often end up trimmed, warped, or maybe scattered across the timeline for some reason.
@@ -15,9 +17,7 @@ I built TrueClip to automate my own personal workflow for prepping stems.
     <a href="https://github.com/wuritz/trueclip/releases">
         <img src="https://img.shields.io/github/downloads/wuritz/trueclip/total?style=for-the-badge"
         ">
-    </a>
-<a href="https://github.com/wuritz/trueclip/releases">
-    <img src="https://img.shields.io/github/v/tag/wuritz/trueclip?label=Latest version&style=for-the-badge">
+        <img src="https://img.shields.io/github/v/tag/wuritz/trueclip?label=Latest version&style=for-the-badge">
 </a>
 </div>
 
