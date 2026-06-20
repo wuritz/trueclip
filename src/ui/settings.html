@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrueClip</title>
+  <script>/* __SCRIPT__ */</script>
+  <style>/* __STYLE__ */</style>
+</head>
+
+<body>
+  <div>
+    <div class="title">TrueClip</div>
+
+    <div class="section-label">Action</div>
+    <div class="segmented">
+      <input type="radio" name="mode" id="modePrep" value="prep" checked />
+      <label for="modePrep">Prep Stems</label>
+
+      <input type="radio" name="mode" id="modeRename" value="rename" />
+      <label for="modeRename">Rename Clips</label>
+    </div>
+
+    <!-- Prep Stems options -->
+    <div id="prepOptions" class="form">
+      <div class="alx-toggle-row">
+        <label class="alx-toggle-label" for="warp">
+          Disable warp
+          <span class="desc">Turns off warping on every clip</span>
+        </label>
+        <span class="alx-switch">
+          <input type="checkbox" id="warp" checked />
+          <span class="track"></span>
+        </span>
+      </div>
+
+      <div class="alx-toggle-row">
+        <label class="alx-toggle-label" for="align">
+          Align to 1.1.1.1
+          <span class="desc">Extends clips back to their true start and moves them to bar 1</span>
+        </label>
+        <span class="alx-switch">
+          <input type="checkbox" id="align" checked />
+          <span class="track"></span>
+        </span>
+      </div>
+
+      <div class="alx-toggle-row">
+        <label class="alx-toggle-label" for="mute">
+          Mute tracks
+          <span class="desc">Turns off every audio track after processing</span>
+        </label>
+        <span class="alx-switch">
+          <input type="checkbox" id="mute" checked />
+          <span class="track"></span>
+        </span>
+      </div>
+
+      <div class="alx-toggle-row">
+        <label class="alx-toggle-label" for="renameAsPartOfPrep">
+          Rename clips to track name
+          <span class="desc">Numbers sequentially if a track has multiple clips</span>
+        </label>
+        <span class="alx-switch">
+          <input type="checkbox" id="renameAsPartOfPrep" checked />
+          <span class="track"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Rename Clips options -->
+    <div id="renameOptions" class="form" style="display:none;">
+      <div class="section-label" style="margin-top: 0.4em;">Scope</div>
+
+      <label class="radio-row" for="scopeTrack">
+        <input type="radio" name="scope" id="scopeTrack" value="track" checked />
+        Selected track only
+      </label>
+      <label class="radio-row" for="scopeSet">
+        <input type="radio" name="scope" id="scopeSet" value="set" />
+        Whole set (all audio tracks)
+      </label>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="alx-button" onclick="cancel()">Cancel</button>
+    <button class="alx-button" onclick="run()">Run</button>
+  </div>
+</body>
+
+</html>

@@ -1,160 +1,31 @@
 import { ActivationContext, AudioClip, AudioTrack, Handle, initialize } from "@ableton-extensions/sdk";
 
-export function activate(activation: ActivationContext) {
-    const context = initialize(activation, "1.0.0");
+import settingsHtml from "./ui/settings.html";
+import settingsCss  from "./ui/settings.css";
+import settingsJs   from "./ui/settings.js";
 
-    // 'prepare tracks' context
-    context.ui.registerContextMenuAction("AudioTrack", "Prepare All Tracks", "trueClip.run");
-    context.ui.registerContextMenuAction("AudioClip", "Prepare All Tracks", "trueClip.run");
+const settingsInterface = settingsHtml
+    .replace("/* __STYLE__ */", settingsCss)
+    .replace("/* __SCRIPT__ */", settingsJs);
 
-    // 'rename tracks' context
-    context.ui.registerContextMenuAction("AudioTrack", "This Track - Rename Clips to Track name", "trueClip.renameClips");
-    context.ui.registerContextMenuAction("AudioClip", "This Track - Rename Clips to Track name", "trueClip.renameClips");
-    
-    context.ui.registerContextMenuAction("AudioTrack", "ALL - Rename Clips to Track name", "trueClip.renameClipsAll");
-    context.ui.registerContextMenuAction("AudioClip", "ALL - Rename Clips to Track name", "trueClip.renameClipsAll");
+const settingsDialogUrl = 
+    "data:text/html;base64," + Buffer.from(settingsInterface, "utf-8").toString("base64");
 
-    context.commands.registerCommand("trueClip.run", (_arg: unknown) => {
-        void (async () => {
-            const song = context.application.song;
-
-            // collect audiotracks
-            const audioTracks = song.tracks.filter(
-                (t): t is AudioTrack<"1.0.0"> => t instanceof AudioTrack && t.arrangementClips.length > 0
-            );
-
-            if (audioTracks.length === 0) {
-                console.log("No audio tracks with clips found.");
-                return;
-            }
-
-            // we can begin
-            const total = audioTracks.length;
-            
-            await context.ui.withinProgressDialog("Preparing Stems", {}, async (update, abortSignal) => {        
-                for (let i = 0; i < audioTracks.length; i++) {
-                    // cancel button
-                    if (abortSignal.aborted) {
-                        update("Cancelled.", 100);
-                        return;
-                    }
-
-                    // current track + progress
-                    const track = audioTracks[i];
-                    const progress = Math.round((i / total) * 100);
-
-                    const currentTrackInfo = `[${i + 1}/${total}] ${track.name}`;
-
-                    update(`${currentTrackInfo} - reading clips..`, progress);
-
-                    // read clips
-                    const clips = track.arrangementClips.filter(
-                        (c): c is AudioClip<"1.0.0"> => c instanceof AudioClip
-                    );
-
-                    // 1: take a snapshot of every clip in the track
-                    const snapshots = clips.map(clip => ({
-                        clip,
-                        filePath:       clip.filePath,
-                        duration:       clip.duration,
-                        startMarker:    clip.startMarker,
-                        endMarker:      clip.endMarker,
-                        name:           clip.name,
-                        color:          clip.color,
-                        muted:          clip.muted
-                    }));
-
-                    // 2: delete existing clips
-                    update(`${currentTrackInfo} - deleting clips..`, progress);
-
-                    for (const { clip } of snapshots) {
-                        await context.withinTransaction(() => track.deleteClip(clip));
-                    }
-
-                    // 3: recreate the clips
-                    update(`${currentTrackInfo} - placing clips..`, progress);
-
-                    let cursor = 0;
-
-                    for (const s of snapshots) {
-                        const newClip = await context.withinTransaction(() =>
-                            track.createAudioClip({
-                                filePath:   s.filePath,
-                                startTime:  cursor,
-                                isWarped:   false
-                            })
-                        );
-
-                        await context.withinTransaction(() => {
-                            newClip.name =  s.name;
-                            newClip.color = s.color;
-                            newClip.muted = s.muted;
-                        });
-
-                        cursor += s.duration;
-                    }
-
-                    update(`${currentTrackInfo} - muting..`, progress);
-
-                    await context.withinTransaction(() => {
-                        track.mute = true;
-                    });
-                }
-
-                update(`Done - ${total} track(s) have been prepared!`, 100);
-                console.log(`Done - ${total} track(s) have been prepared!`);
-            });
-        })();
-    });
-
-    context.commands.registerCommand("trueClip.renameClips", (arg: unknown) => {
-        void (async (handle: Handle) => {
-            const track = context.getObjectFromHandle(handle, AudioTrack);
-            await renameClipsOnTrack(context, track);
-
-            console.log(`Renamed clips on ${track.name}.`);
-        })(arg as Handle).catch((e) => console.error("Error renaming clips: ", e));
-    });
-
-    context.commands.registerCommand("trueClip.renameClipsAll", async (_arg: unknown) => {
-        try {
-            const song = context.application.song;
-
-            const audioTracks = song.tracks.filter(
-                (t): t is AudioTrack<"1.0.0"> => t instanceof AudioTrack && t.arrangementClips.length > 0
-            );
-
-            if (audioTracks.length === 0) {
-                console.log("No audio tracks with clips found.");
-                return;
-            }
-
-            const total = audioTracks.length;
-
-            await context.ui.withinProgressDialog("Renaming Clips", { progress: 0}, async (update, abortSignal) => {
-                for (let i = 0; i < audioTracks.length; i++) {
-                    if (abortSignal.aborted) {
-                        await update("Cancelled.", 100);
-                        return;
-                    }
-
-                    const track = audioTracks[i];
-                    const progress = Math.round((i / total) * 100);
-                    
-                    await update(`[${i + 1}/${total}] - Renaming ${track.name}...`, progress);
-                    await renameClipsOnTrack(context, track);
-                }
-
-                await update(`Done - ${total} tracks have been renamed.`, 100);
-                console.log(`Done - ${total} tracks have been renamed.`);
-            });
-        } catch (error) {
-            console.error("Error renaming all tracks: ", error);
-        }
-    });
-
-    console.log("Extension ready!");
-}
+type DialogResult = 
+    | { cancelled: true}
+    | {
+        cancelled: false;
+        mode: "prep";
+        warp: boolean;
+        align: boolean;
+        mute: boolean;
+        rename: boolean;
+    }
+    | {
+        cancelled: false;
+        mode: "rename";
+        scope: "track" | "set";
+    };
 
 async function renameClipsOnTrack(
     context: ReturnType<typeof initialize<"1.0.0">>, 
@@ -173,4 +44,208 @@ async function renameClipsOnTrack(
             clips[i].name = name;
         });
     }
+}
+
+function getTrackFromHandle(
+    context: ReturnType<typeof initialize<"1.0.0">>,
+    handle: Handle
+): AudioTrack<"1.0.0"> | undefined {
+    try {
+        return context.getObjectFromHandle(handle, AudioTrack);
+    } catch {
+        try {
+            const clip = context.getObjectFromHandle(handle, AudioClip);
+            const parent = clip.parent;
+            return parent instanceof AudioTrack ? parent : undefined;
+        } catch {
+            return undefined;
+        }
+    }
+}
+
+async function runStemPreparation(
+    context: ReturnType<typeof initialize<"1.0.0">>,
+    tracks: AudioTrack<"1.0.0">[],
+    settings: { warp: boolean; align: boolean; mute: boolean; rename: boolean; }
+) {
+    const total = tracks.length;
+            
+    await context.ui.withinProgressDialog("Preparing Stems", {}, async (update, abortSignal) => {        
+        for (let i = 0; i < tracks.length; i++) {
+            // cancel button
+            if (abortSignal.aborted) {
+                update("Cancelled.", 100);
+                return;
+            }
+
+            // current track + progress
+            const track = tracks[i];
+            const progress = Math.round((i / total) * 100);
+
+            // read clips
+            const clips = track.arrangementClips.filter(
+                (c): c is AudioClip<"1.0.0"> => c instanceof AudioClip
+            );
+            
+            const currentTrackInfo = `[${i + 1}/${total}] ${track.name}`;
+
+            if (settings.warp || settings.align) {
+                await update(`${currentTrackInfo} - reading clips..`, progress);
+
+                // 1: take a snapshot of every clip in the track
+                const snapshots = clips.map(clip => ({
+                    clip,
+                    filePath:       clip.filePath,
+                    duration:       clip.duration,
+                    startMarker:    clip.startMarker,
+                    endMarker:      clip.endMarker,
+                    startTime:      clip.startTime,
+                    name:           clip.name,
+                    color:          clip.color,
+                    muted:          clip.muted
+                }));
+
+                // 2: delete existing clips
+                await update(`${currentTrackInfo} - deleting clips..`, progress);
+
+                for (const { clip } of snapshots) {
+                    await context.withinTransaction(() => track.deleteClip(clip));
+                }
+
+                // 3: recreate the clips
+                await update(`${currentTrackInfo} - placing clips..`, progress);
+
+                let cursor = 0;
+
+                for (const s of snapshots) {
+                    const startTime = settings.align ? cursor : s.startTime;
+
+                    const newClip = await context.withinTransaction(() =>
+                        track.createAudioClip({
+                            filePath:   s.filePath,
+                            startTime,
+                            isWarped:   settings.warp ? false : true
+                        })
+                    );
+
+                    await context.withinTransaction(() => {
+                        newClip.name =  s.name;
+                        newClip.color = s.color;
+                        newClip.muted = s.muted;
+                    });
+
+                    cursor += s.duration;
+                }
+            }
+
+            if (settings.rename) {
+                await update(`${currentTrackInfo} - renaming clips...`, progress);
+                await renameClipsOnTrack(context, track);
+            }
+
+            if (settings.mute) {
+                await update(`${currentTrackInfo} - muting...`, progress);
+                await context.withinTransaction(() => {
+                    track.mute = true;
+                });
+            }
+        }
+
+        await update(`Done - ${total} track(s) have been prepared!`, 100);
+        console.log(`Done - ${total} track(s) have been prepared!`);
+    });
+}
+
+async function runRenameClips(
+    context: ReturnType<typeof initialize<"1.0.0">>,
+    tracks:  AudioTrack<"1.0.0">[]
+) {
+    const total = tracks.length;
+
+    await context.ui.withinProgressDialog("Renaming Clips", { progress: 0 }, async (update, abortSignal) => {
+        for (let i = 0; i < tracks.length; i++) {
+            if (abortSignal.aborted) {
+                await update("Cancelled.", 100);
+                return;
+            }
+
+            const track = tracks[i];
+            const progress = Math.round((i / total) * 100);
+            
+            await update(`[${i + 1}/${total}] - Renaming ${track.name}...`, progress);
+            await renameClipsOnTrack(context, track);
+        }
+
+        await update(`Done - ${total} tracks have been renamed.`, 100);
+        console.log(`Done - ${total} tracks have been renamed.`);
+    });
+}
+
+export function activate(activation: ActivationContext) {
+    const context = initialize(activation, "1.0.0");
+
+    // Register
+    context.ui.registerContextMenuAction("AudioTrack", "Open..", "trueClip.run");
+    context.ui.registerContextMenuAction("AudioClip", "Open..", "trueClip.run");
+
+    context.commands.registerCommand("trueClip.run", (_arg: unknown) => {
+        void (async (handle: Handle) => {
+            try {
+                const resultString = await context.ui.showModalDialog(
+                    settingsDialogUrl,
+                    380, 420
+                );
+
+                const result = JSON.parse(resultString) as DialogResult;
+
+                if (result.cancelled) {
+                    console.log("Cancelled by user.");
+                    return;
+                }
+
+                const song = context.application.song;
+                const allAudioTracks = song.tracks.filter(
+                    (t): t is AudioTrack<"1.0.0"> => t instanceof AudioTrack && t.arrangementClips.length > 0
+                );
+
+                if (result.mode == "prep") {
+                    if (allAudioTracks.length === 0) {
+                        console.log("No audio tracks with clips found.");
+                        return;
+                    }
+
+                    await runStemPreparation(context, allAudioTracks, {
+                        warp:   result.warp,
+                        align:  result.align,
+                        mute:   result.mute,
+                        rename: result.rename
+                    });
+                    return;
+                }
+
+                // mode is rename
+                if (result.scope === "set") {
+                    if (allAudioTracks.length === 0) {
+                        console.log("No audio tracks with clips found.");
+                        return;
+                    }
+
+                    await runRenameClips(context, allAudioTracks);
+                } else {
+                    const track = getTrackFromHandle(context, handle);
+                    
+                    if (!track) {
+                        console.log("Could not resolve the selected track.");
+                        return;
+                    }
+
+                    await runRenameClips(context, [track]);
+                }
+            } catch (err) {
+                console.error(`Error occurred: ${err}`);
+            }
+        })(_arg as Handle);
+    });
+
+    console.log("Extension is ready!");
 }
