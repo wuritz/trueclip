@@ -5,15 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrueClip</title>
-  <script>/* __SCRIPT__ */</script>
-  <style>/* __STYLE__ */</style>
+  <!--<script>/* __SCRIPT__ */</script>
+  <style>/* __STYLE__ */</style> -->
+  <script src="settings.js"></script>
+  <link rel="stylesheet" href="settings.css">
 </head>
 
 <body>
   <div>
     <div class="title">TrueClip</div>
 
-    <div class="section-label">Action</div>
+    <div class="section-label">Select an action:</div>
     <div class="segmented">
       <input type="radio" name="mode" id="modePrep" value="prep" checked />
       <label for="modePrep">Prep Stems</label>
@@ -22,7 +24,10 @@
       <label for="modeRename">Rename Clips</label>
     </div>
 
+    <div style="margin-top: 40px;"></div>
+
     <!-- Prep Stems options -->
+    <div class="section-label">Options:</div>
     <div id="prepOptions" class="form">
       <div class="alx-toggle-row">
         <label class="alx-toggle-label" for="warp">
@@ -74,11 +79,11 @@
       <div class="section-label" style="margin-top: 0.4em;">Scope</div>
 
       <label class="radio-row" for="scopeTrack">
-        <input type="radio" name="scope" id="scopeTrack" value="track" checked />
+        <input type="radio" name="scope" id="scopeTrack" value="track" />
         Selected track only
       </label>
       <label class="radio-row" for="scopeSet">
-        <input type="radio" name="scope" id="scopeSet" value="set" />
+        <input type="radio" name="scope" id="scopeSet" value="set" checked />
         Whole set (all audio tracks)
       </label>
     </div>
