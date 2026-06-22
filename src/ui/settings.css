@@ -3,35 +3,25 @@
 *:not(dialog) { margin: 0; }
 input, button { font: inherit; }
 
-/* Live dark theme tokens */
 :root {
-  --p-live-ui-bg: hsl(0, 0%, 21%);
-  --p-live-control-bg: hsl(0, 0%, 16%);
-  --p-live-input-bg: hsl(0, 0%, 12%);
-  --p-live-text-primary: hsl(0, 0%, 71%);
-  --p-live-control-border: hsl(0, 0%, 7%);
-  --p-live-text-secondary: hsl(0, 0%, 41%);
-  --p-live-accent-primary: hsl(31, 100%, 67%);
-  --p-live-control-text--enabled: hsl(0, 0%, 7%);
-
-  --c-bg--0500: oklch(from var(--p-live-ui-bg) l c h);
-  --c-text-primary: oklch(from var(--p-live-text-primary) l c h);
-  --c-text-secondary: oklch(from var(--p-live-text-secondary) l c h);
-  --c-control-bg--400: oklch(from var(--p-live-control-bg) calc(l * 0.9) c h);
-  --c-control-bg--500: oklch(from var(--p-live-control-bg) l c h);
-  --c-control-border: oklch(from var(--p-live-control-border) l c h);
-  --c-control-outline: var(--c-text-secondary);
-  --c-control-on-foreground: oklch(from var(--p-live-control-text--enabled) l c h);
-  --c-input-bg-500: oklch(from var(--p-live-input-bg) l c h);
-  --c-highlight--primary: oklch(from var(--p-live-accent-primary) l c h);
+  --bg:        #0d0f10;
+  --panel:     #15181a;
+  --line:      #262b2e;
+  --line-soft: #1d2124;
+  --text:      #d7dadb;
+  --text-dim:  #6f7b7e;
+  --accent:    #5eead4;
+  --accent-dim: #2a4a45;
+  --danger:    #e85d5d;
 }
 
 html {
-  background-color: var(--c-bg--0500);
-  color: var(--c-text-primary);
-  font-family: "AbletonSansSmall", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "JetBrains Mono", "SF Mono", "Consolas", monospace;
   font-size: 11.5px;
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
   height: 100%;
 }
@@ -41,163 +31,212 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5em;
+  padding: 0;
+}
+
+/* ── Header ── */
+.header {
+  padding: 1.1em 1.3em 0.9em;
+  border-bottom: 1px solid var(--line);
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.1rem;
   font-weight: 600;
-  color: var(--c-text-primary);
-  margin-bottom: 0.75em;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.title::before {
+  content: "// ";
+  color: var(--accent);
+}
+
+/* ── Tabs (mode selector) ── */
+.tabs {
+  display: flex;
+  gap: 1.4em;
+  margin-top: 0.9em;
+}
+.tabs input {
+  display: none;
+}
+.tabs label {
+  position: relative;
+  padding-bottom: 0.6em;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: color 0.12s;
+}
+.tabs label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.15s;
+}
+.tabs input:checked + label {
+  color: var(--text);
+}
+.tabs input:checked + label::after {
+  transform: scaleX(1);
+}
+
+/* ── Body ── */
+.body {
+  flex: 1;
+  padding: 0.4em 1.3em 1em;
 }
 
 .section-label {
-  font-size: 0.85rem;
-  color: var(--c-text-secondary);
-  margin-bottom: 0.4em;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin: 1em 0 0.5em;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-/* Segmented control for mode / scope */
-.segmented {
-  display: flex;
-  border: 1px solid var(--c-control-border);
-  border-radius: 1em;
-  overflow: hidden;
-  margin-bottom: 1em;
-}
-.segmented input {
-  display: none;
-}
-.segmented label {
-  flex: 1;
-  text-align: center;
-  padding: 0.4em 0.6em;
-  cursor: pointer;
-  background-color: var(--c-control-bg--500);
-  color: var(--c-text-secondary);
-  transition: background-color 0.12s, color 0.12s;
-  border-right: 1px solid var(--c-control-border);
-  font-size: 1rem;
-}
-.segmented label:last-of-type {
-  border-right: none;
-}
-.segmented input:checked + label {
-  background-color: var(--c-highlight--primary);
-  color: var(--c-control-on-foreground);
-  font-weight: 600;
+  letter-spacing: 0.08em;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 0.6em;
-  width: 100%;
 }
 
-.alx-toggle-row {
+/* ── Toggle rows ── */
+.opt-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1em;
-  padding: 0.4em 0;
-  border-bottom: 1px solid var(--c-control-border);
+  padding: 0.65em 0;
+  border-bottom: 1px solid var(--line-soft);
 }
-.alx-toggle-row:last-child { border-bottom: none; }
+.opt-row:last-child { border-bottom: none; }
 
-.alx-toggle-label {
+.opt-label {
   display: flex;
   flex-direction: column;
-  gap: 0.15em;
+  gap: 0.2em;
   cursor: pointer;
 }
 
-.alx-toggle-label .desc {
-  font-size: 0.85rem;
-  color: var(--c-text-secondary);
+.opt-label .name {
+  color: var(--text);
+  font-size: 0.95rem;
 }
 
-/* Toggle switch, styled with Live's tokens */
-.alx-switch {
-  position: relative;
+.opt-label .desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.bracket-toggle {
   display: block;
-  width: 32px;
-  height: 18px;
   flex-shrink: 0;
   cursor: pointer;
-}
-.alx-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.alx-switch .track {
-  position: absolute;
-  inset: 0;
-  background-color: var(--c-control-bg--500);
-  border: 1px solid var(--c-control-border);
-  border-radius: 18px;
-  cursor: pointer;
-  transition: background-color 0.12s;
-}
-.alx-switch .track::before {
-  content: "";
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  left: 2px;
-  top: 2px;
-  background-color: var(--c-text-primary);
-  border-radius: 50%;
-  transition: transform 0.12s;
-}
-.alx-switch input:checked + .track {
-  background-color: var(--c-highlight--primary);
-}
-.alx-switch input:checked + .track::before {
-  transform: translateX(14px);
-  background-color: var(--c-control-on-foreground);
-}
-.alx-switch input:focus-visible + .track {
-  outline: 2px solid var(--c-control-outline);
-}
-
-.alx-button {
-  font-size: 1rem;
-  line-height: 1;
-  background-color: var(--c-control-bg--500);
-  color: var(--c-text-primary);
-  border: 1px solid var(--c-control-border);
-  height: 20px;
-  padding: 0 1em;
-  border-radius: 1em;
-  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.3em 0.7em;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  background: transparent;
   user-select: none;
-  white-space: nowrap;
+  transition: color 0.12s, border-color 0.12s, background-color 0.12s;
+  min-width: 3.6em;
+  text-align: center;
 }
-.alx-button:hover { background-color: var(--c-control-bg--400); }
-.alx-button:active {
-  color: var(--c-control-on-foreground);
-  background-color: var(--c-highlight--primary);
+.bracket-toggle input {
+  display: none;
 }
-.alx-button:focus { outline: 2px solid var(--c-control-outline); }
+.bracket-toggle .state::before {
+  content: "OFF";
+}
+.bracket-toggle input:checked ~ .state::before {
+  content: "ON";
+}
+.bracket-toggle:has(input:checked) {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
 
-.buttons {
-  display: flex;
-  gap: 0.5em;
-  justify-content: flex-end;
-  margin-top: 1em;
-}
-
+/* ── Radio rows (scope selector) ── */
 .radio-row {
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  padding: 0.3em 0;
+  gap: 0.7em;
+  padding: 0.5em 0;
   cursor: pointer;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  transition: color 0.12s;
+}
+.radio-row:has(input:checked) {
+  color: var(--text);
+}
+
+.radio-mark {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  position: relative;
 }
 .radio-row input {
-  accent-color: var(--c-highlight--primary);
+  display: none;
+}
+.radio-row input:checked ~ .radio-mark {
+  border-color: var(--accent);
+}
+.radio-row input:checked ~ .radio-mark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--accent);
+}
+
+/* ── Footer / buttons ── */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6em;
+  padding: 0.9em 1.3em;
+  border-top: 1px solid var(--line);
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 0.5em 1.1em;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s, background-color 0.12s;
+}
+.btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.btn-primary {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: var(--accent);
+  color: var(--bg);
+  opacity: 0.9;
 }
