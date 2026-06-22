@@ -7,4 +7,6 @@ vendor/
 *.log
 *.tsbuildinfo
 
+*.ablx
+
 .env
