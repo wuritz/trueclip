@@ -57,7 +57,6 @@ body {
   margin-bottom: 0.4em;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  padding: 0 0 5px 0;
 }
 
 /* Segmented control for mode / scope */
@@ -123,9 +122,11 @@ body {
 /* Toggle switch, styled with Live's tokens */
 .alx-switch {
   position: relative;
+  display: block;
   width: 32px;
   height: 18px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 .alx-switch input {
   opacity: 0;

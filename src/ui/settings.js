@@ -39,7 +39,7 @@ function run() {
       warp:   document.getElementById('warp').checked,
       align:  document.getElementById('align').checked,
       mute:   document.getElementById('mute').checked,
-      rename: document.getElementById('renameAsPartOfPrep').checked,
+      rename: false,
     });
   } else {
     closeWithResult({
