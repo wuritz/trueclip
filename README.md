@@ -1,7 +1,7 @@
 <h1 align="center">TrueClip for Ableton Live</h1>
 
 <div align="center">
-<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXRtbTVwdWhnZzBtb2wycmphZWhtN215YzZzbHprbHhlaXdoaDIwMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JEWFGVBPBsK7Bo062d/giphy.gif"/>
+<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExenJvcjllYnBnajJ4ZWtjeGF4bWN2cndsd2FpbDFqNXNkMHRleWJmeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/O2KizqOr5gEJ0xSb12/giphy.gif"/>
 </div>
 
 <br>
@@ -16,7 +16,7 @@ I built TrueClip to automate my own personal workflow for prepping stems.
 <div align="center">
     <a href="https://github.com/wuritz/trueclip/releases">
 
-[![Download](https://img.shields.io/github/v/release/wuritz/trueclip?label=Download&style=for-the-badge&logo=ableton&color=aaaaa)](https://github.com/wuritz/trueclip/releases/latest/download/TrueClip-1.2.0.ablx)
+[![Download](https://img.shields.io/github/v/release/wuritz/trueclip?label=Download&style=for-the-badge&logo=ableton&color=aaaaa)](https://github.com/wuritz/trueclip/releases/latest/download/TrueClip-1.3.0.ablx)
 [![Total Downloads](https://img.shields.io/github/downloads/wuritz/trueclip/total?style=for-the-badge)](https://github.com/wuritz/trueclip/releases)
 
 </a>
