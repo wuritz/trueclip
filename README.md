@@ -23,9 +23,10 @@ I built TrueClip to automate my own personal workflow for prepping stems.
 </div>
 
 ## Usage
-Right-click onto an `Audio Track` or an `Audio Clip`, and under `Extensions` select `TrueClip - Prepare All Tracks`.
-<br>
-New feature allows you to rename clips to their tracks' name. To do this, select `TrueClip - Rename Clips to Track name`, and either select `This Track` or `ALL`.
+Open the extension with right-clicking either on an `Audio Track` or an `Audio Clip`, then under `Extensions\` find -> `TrueClip - Open..`.
+
+
+Choose a mode between `Prepare Stems` and `Rename Clips`, tweak the settings, then press `Run`.
 
 ## Features
 
@@ -36,22 +37,16 @@ New feature allows you to rename clips to their tracks' name. To do this, select
 3. Extends the start and end of the clip to the audio's start and end points
 5. Turns off the track - so your ears won't get blasted off when you hit play
 
+Any one of these can be turned off, so you can tailor the process to fit your desire.
+
 **⚠️New feature:⚠️**
 - You can rename your track's clips to the track name
 - You can do this either on one selected track or all tracks
 
 <br>
 
-A couple of important important things to note:
-* All features *ONLY* work on **Audio Clips of Audio Tracks**
-* `Prepare All Tracks` *DOES* retain the **original clip names, colours and mute states**
-
-## Summary of Features
-| Feature | Description |
-|---|---|
-| **Prepare All Tracks** | Prepares all tracks' clips based on the steps written above |
-| **This Track - Rename Clips to Track name** | Renames the selected track's clips to the selected track's name |
-| **ALL - Rename Clips to Track name** | Renames every track's clips to their track name respectively | 
+An important thing to note:
+* All features *ONLY* work on **Audio Clips**
 
 ## Prerequisites
 

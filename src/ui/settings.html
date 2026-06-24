@@ -7,6 +7,8 @@
   <title>TrueClip</title>
   <script>/* __SCRIPT__ */</script>
   <style>/* __STYLE__ */</style>
+  <!-- <script src="settings.js"></script>
+  <link rel="stylesheet" href="settings.css"> -->
 </head>
 
 <body>
@@ -25,9 +27,10 @@
   </div>
 
   <div class="body">
-
     <!-- Prep Stems options -->
     <div id="prepOptions" class="form">
+      <div class="section-label">Options:</div>
+
       <div class="opt-row">
         <label class="opt-label" for="warp">
           <span class="name">Disable warp</span>
@@ -64,7 +67,7 @@
 
     <!-- Rename Clips options -->
     <div id="renameOptions" class="form" style="display:none;">
-      <div class="section-label">Scope</div>
+      <div class="section-label">Scope:</div>
 
       <label class="radio-row">
         <input type="radio" name="scope" id="scopeSet" value="set" checked />
@@ -81,8 +84,12 @@
   </div>
 
   <div class="footer">
-    <button class="btn" onclick="cancel()">Cancel</button>
-    <button class="btn btn-primary" onclick="run()">Run</button>
+    <div class="buttons">
+      <button class="btn" onclick="cancel()">Cancel</button>
+      <button class="btn btn-primary" onclick="run()">Run</button>
+    </div>
+
+    <label class="version-label">v1.3.0</label>
   </div>
 </body>
 

@@ -206,10 +206,22 @@ body {
 /* ── Footer / buttons ── */
 .footer {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.6em;
-  padding: 0.9em 1.3em;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5em;
   border-top: 1px solid var(--line);
+  background-color: var(--panel);
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  order: 2;
+  gap: 0.6em;
+}
+
+.version-label {
+  order: 1;
 }
 
 .btn {

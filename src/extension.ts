@@ -8,10 +8,9 @@ const settingsInterface = settingsHtml
     .replace("/* __STYLE__ */", settingsCss)
     .replace("/* __SCRIPT__ */", settingsJs);
 
-const settingsDialogUrl = 
-    "data:text/html;base64," + Buffer.from(settingsInterface, "utf-8").toString("base64");
+const settingsDialogUrl = `data:text/html,${encodeURIComponent(settingsInterface)}`;
 
-type DialogResult = 
+type DialogResult =
     | { cancelled: true}
     | {
         cancelled: false;
@@ -19,7 +18,6 @@ type DialogResult =
         warp: boolean;
         align: boolean;
         mute: boolean;
-        rename: boolean;
     }
     | {
         cancelled: false;
@@ -66,7 +64,7 @@ function getTrackFromHandle(
 async function runStemPreparation(
     context: ReturnType<typeof initialize<"1.0.0">>,
     tracks: AudioTrack<"1.0.0">[],
-    settings: { warp: boolean; align: boolean; mute: boolean; rename: boolean; }
+    settings: { warp: boolean; align: boolean; mute: boolean; }
 ) {
     const total = tracks.length;
             
@@ -136,11 +134,6 @@ async function runStemPreparation(
 
                     cursor += s.duration;
                 }
-            }
-
-            if (settings.rename) {
-                await update(`${currentTrackInfo} - renaming clips...`, progress);
-                await renameClipsOnTrack(context, track);
             }
 
             if (settings.mute) {
@@ -217,8 +210,7 @@ export function activate(activation: ActivationContext) {
                     await runStemPreparation(context, allAudioTracks, {
                         warp:   result.warp,
                         align:  result.align,
-                        mute:   result.mute,
-                        rename: result.rename
+                        mute:   result.mute
                     });
                     return;
                 }

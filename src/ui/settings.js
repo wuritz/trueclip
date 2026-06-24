@@ -38,8 +38,7 @@ function run() {
       mode: 'prep',
       warp:   document.getElementById('warp').checked,
       align:  document.getElementById('align').checked,
-      mute:   document.getElementById('mute').checked,
-      rename: false,
+      mute:   document.getElementById('mute').checked
     });
   } else {
     closeWithResult({
