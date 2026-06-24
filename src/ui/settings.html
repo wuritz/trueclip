@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrueClip</title>
+  <script>/* __SCRIPT__ */</script>
+  <style>/* __STYLE__ */</style>
+  <!-- <script src="settings.js"></script>
+  <link rel="stylesheet" href="settings.css"> -->
+</head>
+
+<body>
+  <div class="header">
+    <div class="title">TrueClip</div>
+
+    <div class="tabs">
+      <label>Mode:</label>
+
+      <input type="radio" name="mode" id="modePrep" value="prep" checked />
+      <label for="modePrep">Prepare Stems</label>
+
+      <input type="radio" name="mode" id="modeRename" value="rename" />
+      <label for="modeRename">Rename Clips</label>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- Prep Stems options -->
+    <div id="prepOptions" class="form">
+      <div class="section-label">Options:</div>
+
+      <div class="opt-row">
+        <label class="opt-label" for="warp">
+          <span class="name">Disable warp</span>
+          <span class="desc">Turns off warping on every clip</span>
+        </label>
+        <label class="bracket-toggle">
+          <input type="checkbox" id="warp" checked />
+          <span class="state"></span>
+        </label>
+      </div>
+
+      <div class="opt-row">
+        <label class="opt-label" for="align">
+          <span class="name">Align to 1.1.1.1</span>
+          <span class="desc">Extends clips back to their true start and moves them to bar 1</span>
+        </label>
+        <label class="bracket-toggle">
+          <input type="checkbox" id="align" checked />
+          <span class="state"></span>
+        </label>
+      </div>
+
+      <div class="opt-row">
+        <label class="opt-label" for="mute">
+          <span class="name">Mute tracks</span>
+          <span class="desc">Turns off every audio track after processing</span>
+        </label>
+        <label class="bracket-toggle">
+          <input type="checkbox" id="mute" checked />
+          <span class="state"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Rename Clips options -->
+    <div id="renameOptions" class="form" style="display:none;">
+      <div class="section-label">Scope:</div>
+
+      <label class="radio-row">
+        <input type="radio" name="scope" id="scopeSet" value="set" checked />
+        <span class="radio-mark"></span>
+        Whole set (all audio tracks)
+      </label>
+      <label class="radio-row">
+        <input type="radio" name="scope" id="scopeTrack" value="track" />
+        <span class="radio-mark"></span>
+        Selected track only
+      </label>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="buttons">
+      <button class="btn" onclick="cancel()">Cancel</button>
+      <button class="btn btn-primary" onclick="run()">Run</button>
+    </div>
+
+    <label class="version-label">v1.3.0</label>
+  </div>
+</body>
+
+</html>
