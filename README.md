@@ -16,7 +16,8 @@ I built TrueClip to automate my own personal workflow for prepping stems.
 <div align="center">
     <a href="https://github.com/wuritz/trueclip/releases">
 
-[![Download](https://img.shields.io/github/v/release/wuritz/trueclip?label=Download&style=for-the-badge&logo=ableton&color=aaaaa)](https://github.com/wuritz/trueclip/releases/latest/download/TrueClip-1.3.0.ablx)
+[![Download](https://img.shields.io/github/v/release/wuritz/trueclip?style=for-the-badge&label=Download%20latest&color=aaaaa
+)](https://github.com/wuritz/trueclip/releases/latest/download/TrueClip-1.3.0.ablx)
 [![Total Downloads](https://img.shields.io/github/downloads/wuritz/trueclip/total?style=for-the-badge)](https://github.com/wuritz/trueclip/releases)
 
 </a>
